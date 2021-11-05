@@ -4,6 +4,8 @@ const dappConfig = require('./dapp-config.json');
 const ClipboardJS = require('clipboard');
 const BN = require('bn.js'); // Required for injected code
 const manifest = require('../manifest.json');
+const ipfsClient = require('ipfs-http-client');
+const bs58 = require('bs58');
 const t = require('@onflow/types');
 
 
@@ -167,6 +169,28 @@ module.exports = class DappLib {
 
   static async TribesAddTribe(data) {
 
+    if (data.files.length > 1) {
+      throw "Too many images! Please supply 1 image for your Tribe."
+    }
+
+    let folder = false;
+    let config = DappLib.getConfig();
+
+    config.ipfs = {
+      host: 'ipfs.infura.io',
+      protocol: 'https',
+      port: 5001
+    }
+
+    // Push files to IPFS
+    let ipfsResult = await DappLib.ipfsUpload(config, data.files, folder, (bytes) => {
+      console.log(bytes);
+    });
+
+    let file = ipfsResult[0];
+    console.log('IPFS file', file);
+    let image = file.cid.string;
+
     let result = await Blockchain.post({
       config: DappLib.getConfig(),
       roles: {
@@ -175,7 +199,8 @@ module.exports = class DappLib {
     },
       'tribes_add_tribe',
       {
-        newTribeName: { value: data.newTribeName, type: t.String }
+        newTribeName: { value: data.newTribeName, type: t.String },
+        ipfsHash: { value: image, type: t.String }
       }
     );
 
@@ -265,7 +290,7 @@ module.exports = class DappLib {
     );
 
     return {
-      type: DappLib.DAPP_RESULT_STRING,
+      type: DappLib.DAPP_RESULT_OBJECT,
       label: 'All the Tribes',
       result: result.callData
     }
@@ -1066,6 +1091,58 @@ module.exports = class DappLib {
       newData.push(element)
     }
     return { value: newData, type: t.Array(type) }
+  }
+
+  static async ipfsUpload(config, files, wrapWithDirectory, progressCallback) {
+
+    let results = [];
+    if (files.length < 1) {
+      return results;
+    }
+    let ipfs = ipfsClient(config.ipfs);
+    let filesToUpload = [];
+    files.map((file) => {
+      filesToUpload.push({
+        path: file.name,
+        content: file
+      })
+    });
+    const options = {
+      wrapWithDirectory: wrapWithDirectory,
+      pin: true,
+      progress: progressCallback
+    }
+
+    for await (const result of ipfs.add(filesToUpload, options)) {
+      if (wrapWithDirectory && result.path !== "") {
+        continue;
+      }
+      results.push(
+        Object.assign({}, result, DappLib._decodeMultihash(result.cid.string))
+      );
+    }
+
+    return results;
+  }
+
+  static formatIpfsHash(a) {
+    let config = DappLib.getConfig();
+    let url = `${config.ipfs.protocol}://${config.ipfs.host}/ipfs/${a}`;
+    return `<strong class="teal lighten-5 p-1 black-text number copy-target" title="${url}"><a href="${url}" target="_new">${a.substr(0, 6)}...${a.substr(a.length - 4, 4)}</a></strong>${DappLib.addClippy(a)}`;
+  }
+
+  /**
+   * Partition multihash string into object representing multihash
+   * https://github.com/saurfang/ipfs-multihash-on-solidity/blob/master/src/multihash.js
+   */
+  static _decodeMultihash(multihash) {
+    const decoded = bs58.decode(multihash);
+
+    return {
+      digest: `0x${decoded.slice(2).toString('hex')}`,
+      hashFunction: decoded[0],
+      digestLength: decoded[1],
+    };
   }
 
 

@@ -6,11 +6,14 @@ import "./tribes.css"
 
 const accounts = DappLib.getAccounts();
 let ACCOUNT = {
-    "Admin": "0x",
-    "Alice": "0x"
+    "Admin": accounts[0],
+    "Alice": accounts[1],
+    "Birbal": accounts[2],
+    "Chen": accounts[3],
+    "Damian": accounts[4]
 }
 
-const TribesPage = (props:any) => {
+const TribesPage = (props: any) => {
     const [currentTribe, setCurrentTribe] = useState("")
     const [allTribes, setAllTribes] = useState([])
     const [checkedTribe, setCheckedTribe] = useState(false)
@@ -20,7 +23,7 @@ const TribesPage = (props:any) => {
         e.preventDefault()
         let data = {
             tenantOwner: ACCOUNT.Admin,
-            account: ACCOUNT.Alice
+            account: ACCOUNT.Birbal
         }
         try {
             let stuff = await DappLib.TribesGetCurrentTribe(data)

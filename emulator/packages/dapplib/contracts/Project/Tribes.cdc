@@ -36,8 +36,8 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
         access(contract) var participants: {Address: Bool}
         access(contract) var tribes: {String: TribeData}
 
-        pub fun getAllTribes(): [String]
-        access(contract) fun addNewTribe(newTribeName: String)
+        pub fun getAllTribes(): {String: TribeData}
+        access(contract) fun addNewTribe(newTribeName: String, ipfsHash: String)
         access(contract) fun addMember(tribe: String, member: Address)
         access(contract) fun removeMember(currentTribe: String, member: Address)
     }
@@ -49,12 +49,12 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
         pub var tribes: {String: TribeData}
         pub var participants: {Address: Bool}
 
-        pub fun getAllTribes(): [String] {
-            return self.tribes.keys
+        pub fun getAllTribes(): {String: TribeData} {
+            return self.tribes
         }
 
-        pub fun addNewTribe(newTribeName: String) {
-            self.tribes[newTribeName] = TribeData()
+        pub fun addNewTribe(newTribeName: String, ipfsHash: String) {
+            self.tribes[newTribeName] = TribeData(_ipfsHash: ipfsHash)
         }
 
         pub fun addMember(tribe: String, member: Address) {
@@ -164,8 +164,8 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
 
     pub resource Admin {
         pub let tenantID: String
-        pub fun addNewTribe(newTribeName: String) {
-            Tribes.getTenant(id: self.tenantID).addNewTribe(newTribeName: newTribeName)
+        pub fun addNewTribe(newTribeName: String, ipfsHash: String) {
+            Tribes.getTenant(id: self.tenantID).addNewTribe(newTribeName: newTribeName, ipfsHash: ipfsHash)
         }
 
         init(_ tenantID: String) {
@@ -230,17 +230,20 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
 
     pub struct TribeData {
 
-        pub var members: {Address: Bool}
+        pub let ipfsHash: String
 
-        pub fun addMember(member: Address) {
+        access(contract) var members: {Address: Bool}
+
+        access(contract) fun addMember(member: Address) {
             self.members[member] = true
         }
 
-        pub fun removeMember(member: Address) {
+        access(contract) fun removeMember(member: Address) {
             self.members.remove(key: member)
         }
 
-        init() {
+        init(_ipfsHash: String) {
+            self.ipfsHash = _ipfsHash
             self.members = {}
         }
     }
