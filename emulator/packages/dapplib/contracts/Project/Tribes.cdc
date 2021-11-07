@@ -38,7 +38,7 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
 
         pub fun getAllTribes(): {String: TribeData}
         pub fun getTribeData(tribeName: String): TribeData
-        access(contract) fun addNewTribe(newTribeName: String, ipfsHash: String)
+        access(contract) fun addNewTribe(newTribeName: String, ipfsHash: String, description: String)
         access(contract) fun addMember(tribe: String, member: Address)
         access(contract) fun removeMember(currentTribe: String, member: Address)
     }
@@ -58,8 +58,8 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
             return self.tribes[tribeName]!
         }
 
-        pub fun addNewTribe(newTribeName: String, ipfsHash: String) {
-            self.tribes[newTribeName] = TribeData(_ipfsHash: ipfsHash)
+        pub fun addNewTribe(newTribeName: String, ipfsHash: String, description: String) {
+            self.tribes[newTribeName] = TribeData(_ipfsHash: ipfsHash, _description: description)
         }
 
         pub fun addMember(tribe: String, member: Address) {
@@ -169,8 +169,8 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
 
     pub resource Admin {
         pub let tenantID: String
-        pub fun addNewTribe(newTribeName: String, ipfsHash: String) {
-            Tribes.getTenant(id: self.tenantID).addNewTribe(newTribeName: newTribeName, ipfsHash: ipfsHash)
+        pub fun addNewTribe(newTribeName: String, ipfsHash: String, description: String) {
+            Tribes.getTenant(id: self.tenantID).addNewTribe(newTribeName: newTribeName, ipfsHash: ipfsHash, description: description)
         }
 
         init(_ tenantID: String) {
@@ -237,6 +237,8 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
 
         pub let ipfsHash: String
 
+        pub var description: String
+
         access(contract) var members: {Address: Bool}
 
         access(contract) fun addMember(member: Address) {
@@ -247,9 +249,10 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
             self.members.remove(key: member)
         }
 
-        init(_ipfsHash: String) {
+        init(_ipfsHash: String, _description: String) {
             self.ipfsHash = _ipfsHash
             self.members = {}
+            self.description = _description
         }
     }
     

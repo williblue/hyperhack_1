@@ -45,10 +45,12 @@ export default class TribesHarness extends LitElement {
         </action-card>
       
         <action-card title="Tribes - Add a New Tribe" description="Add a New Tribe" action="TribesAddTribe" method="post"
-          fields="tenantOwner newTribeName files">
+          fields="tenantOwner newTribeName files description">
           <account-widget field="tenantOwner" label="Tenant Address">
           </account-widget>
           <text-widget field="newTribeName" label="Tribe Name" placeholder="Archers">
+          </text-widget>
+          <text-widget field="description" label="Description" placeholder="A group of Archers.">
           </text-widget>
           <upload-widget data-field="files" field="file" label="Tribe Image" placeholder="Select an image for your new Tribe"
             multiple="true">

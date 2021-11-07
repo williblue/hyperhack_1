@@ -191,7 +191,7 @@ module.exports = class DappLib {
 
       let file = ipfsResult[0];
       console.log('IPFS file', file);
-      image = file.cid.string;
+      image = 'https://ipfs.infura.io/ipfs/' + file.cid.string;
     } else {
       image = "N/A"
     }
@@ -206,7 +206,8 @@ module.exports = class DappLib {
       'tribes_add_tribe',
       {
         newTribeName: { value: data.newTribeName, type: t.String },
-        ipfsHash: { value: image, type: t.String }
+        ipfsHash: { value: image, type: t.String },
+        description: { value: data.description, type: t.String }
       }
     );
 
@@ -274,6 +275,7 @@ module.exports = class DappLib {
         tenantOwner: { value: data.tenantOwner, type: t.Address }
       }
     );
+    console.log(result.callData)
 
     return {
       type: DappLib.DAPP_RESULT_OBJECT,
