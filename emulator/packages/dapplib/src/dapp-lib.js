@@ -173,23 +173,29 @@ module.exports = class DappLib {
       throw "Too many images! Please supply 1 image for your Tribe."
     }
 
-    let folder = false;
-    let config = DappLib.getConfig();
+    let image;
+    if (data.files.length > 0) {
+      let folder = false;
+      let config = DappLib.getConfig();
 
-    config.ipfs = {
-      host: 'ipfs.infura.io',
-      protocol: 'https',
-      port: 5001
+      config.ipfs = {
+        host: 'ipfs.infura.io',
+        protocol: 'https',
+        port: 5001
+      }
+
+      // Push files to IPFS
+      let ipfsResult = await DappLib.ipfsUpload(config, data.files, folder, (bytes) => {
+        console.log(bytes);
+      });
+
+      let file = ipfsResult[0];
+      console.log('IPFS file', file);
+      image = file.cid.string;
+    } else {
+      image = "N/A"
     }
 
-    // Push files to IPFS
-    let ipfsResult = await DappLib.ipfsUpload(config, data.files, folder, (bytes) => {
-      console.log(bytes);
-    });
-
-    let file = ipfsResult[0];
-    console.log('IPFS file', file);
-    let image = file.cid.string;
 
     let result = await Blockchain.post({
       config: DappLib.getConfig(),
