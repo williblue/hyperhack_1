@@ -60,7 +60,7 @@ export let staticPages = [
   {
     name: "core-marketplace",
     title: "Marketplace",
-    description: "Buy/sell SimpleNFTs using SimpleFTs.",
+    description: "Buy/sell SimpleNFTs using SimpleTokens.",
     category: "Hyperverse",
     route: "/playground/harness/core-marketplace",
   },
