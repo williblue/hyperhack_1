@@ -29,11 +29,11 @@ export let staticPages = [
     route: "/playground/harness/core-nft",
   },
   {
-    name: "core-ft",
-    title: "SimpleFT Module",
+    name: "core-token",
+    title: "SimpleToken Module",
     description: "Mint, own, and trade Simple Fungible Tokens.",
     category: "Hyperverse",
-    route: "/playground/harness/core-ft",
+    route: "/playground/harness/core-token",
   },
   {
     name: "core-tribes",
@@ -53,7 +53,7 @@ export let staticPages = [
     name: "core-rewards",
     title: "Rewards Module",
     description:
-      "Mint, own, and trade Simple NFTs, and get a reward when you have 3 SimpleNFTs.",
+      "Mint, own, and trade Simple NFTs, and get a reward when you have __ SimpleNFTs.",
     category: "Hyperverse",
     route: "/playground/harness/core-rewards",
   },

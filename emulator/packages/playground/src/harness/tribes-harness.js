@@ -38,8 +38,8 @@ export default class TribesHarness extends LitElement {
           </account-widget>
         </action-card>
       
-        <action-card title="Tribes - Get Client Tenants" description="Get all your Tenant IDs" action="TribesGetClientTenants"
-          method="get" fields="account">
+        <action-card title="Tribes - Get Client Tenants" description="Tribes TenantID for this account"
+          action="TribesGetClientTenants" method="get" fields="account">
           <account-widget field="account" label="Account">
           </account-widget>
         </action-card>

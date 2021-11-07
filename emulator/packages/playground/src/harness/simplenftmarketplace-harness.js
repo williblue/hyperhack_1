@@ -38,36 +38,26 @@ export default class SimpleNFTMarketplaceHarness extends LitElement {
             </account-widget>
         </action-card>
     
-        <action-card title="SimpleNFTMarketplace - Get Client Tenants" description="Get all your Tenant IDs"
-            action="SimpleNFTMarketplaceGetClientTenants" method="get" fields="account">
-            <account-widget field="account" label="Account">
-            </account-widget>
-        </action-card>
-    
-        <action-card title="SimpleNFTMarketplace - Get Balance" description="Get Balance" action="FlowTokenGetBalance"
+        <action-card title="SimpleNFTMarketplace - Get Client Tenants"
+            description="SimpleNFTMarketplace TenantID for this account" action="SimpleNFTMarketplaceGetClientTenants"
             method="get" fields="account">
             <account-widget field="account" label="Account">
             </account-widget>
         </action-card>
     
-        <action-card title="SimpleNFT - Give Minter" description="Give a SimpleNFT Minter to the recipient account"
-            action="SimpleNFTGiveMinter" method="post" fields="tenantOwner recipient">
-            <account-widget field="tenantOwner" label="Tenant Owner">
-            </account-widget>
-            <account-widget field="recipient" label="Recipient">
+        <action-card title="SimpleNFTMarketplace - Get Balance"
+            description="Get FlowToken Balance (initially 1,000 per account)" action="FlowTokenGetBalance" method="get"
+            fields="account">
+            <account-widget field="account" label="Account">
             </account-widget>
         </action-card>
     
-        <action-card title="SimpleNFTMarketplace - Mint NFT" description="Mint NFT" action="SimpleNFTMintNFT" method="post"
-            fields="tenantOwner signer recipient name">
+        <action-card title="SimpleNFTMarketplace - Get NFT IDs" description="Get an account's NFT IDs"
+            action="SimpleNFTGetNFTIDs" method="get" fields="account tenantOwner">
             <account-widget field="tenantOwner" label="Tenant Owner">
             </account-widget>
-            <account-widget field="signer" label="NFTMinter">
+            <account-widget field="account" label="Account">
             </account-widget>
-            <account-widget field="recipient" label="Recipient">
-            </account-widget>
-            <text-widget field="name" label="Name of NFT" placeholder="BoredApe1">
-            </text-widget>
         </action-card>
     
         <action-card title="SimpleNFTMarketplace - List for Sale" description="List NFTs for Sale"

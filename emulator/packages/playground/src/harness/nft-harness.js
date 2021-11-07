@@ -38,7 +38,7 @@ export default class NFTHarness extends LitElement {
           </account-widget>
         </action-card>
       
-        <action-card title="SimpleNFT - Get Client Tenants" description="Get all your Tenant IDs"
+        <action-card title="SimpleNFT - Get Client Tenants" description="SimpleNFT TenantID for this account"
           action="SimpleNFTGetClientTenants" method="get" fields="account">
           <account-widget field="account" label="Account">
           </account-widget>
