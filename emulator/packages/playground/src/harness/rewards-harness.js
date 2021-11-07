@@ -46,14 +46,6 @@ export default class RewardsHarness extends LitElement {
           </account-widget>
         </action-card>
       
-        <action-card title="Rewards - Mint NFT" description="Mint NFT" action="RewardsMintNFT" method="post"
-          fields="tenantOwner recipient">
-          <account-widget field="tenantOwner" label="Tenant Owner">
-          </account-widget>
-          <account-widget field="recipient" label="Recipient">
-          </account-widget>
-        </action-card>
-      
         <action-card title="Rewards - Give Reward" description="Give Reward" action="RewardsGiveReward" method="post"
           fields="tenantOwner signer">
           <account-widget field="tenantOwner" label="Tenant Owner">
