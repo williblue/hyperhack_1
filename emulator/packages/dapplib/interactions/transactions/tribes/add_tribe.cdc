@@ -1,6 +1,6 @@
 import Tribes from "../../../contracts/Project/Tribes.cdc"
 
-transaction(newTribeName: String, ipfsHash: String) {
+transaction(newTribeName: String, ipfsHash: String, description: String) {
 
     let TenantID: String
     let TribesAdmin: &Tribes.Admin
@@ -17,7 +17,7 @@ transaction(newTribeName: String, ipfsHash: String) {
     }
 
     execute {
-        self.TribesAdmin.addNewTribe(newTribeName: newTribeName, ipfsHash: ipfsHash)
+        self.TribesAdmin.addNewTribe(newTribeName: newTribeName, ipfsHash: ipfsHash, description: description)
         log("This admin has added a new tribe to join.")
     }
 }
