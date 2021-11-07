@@ -34,8 +34,6 @@ pub contract NFTMarketplace: IHyperverseModule, IHyperverseComposable {
         self.aliases[new] = original
     }
 
-
-
     pub resource interface IState {
         pub let tenantID: String
         pub var holder: Address

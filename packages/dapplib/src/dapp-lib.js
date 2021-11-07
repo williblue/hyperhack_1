@@ -68,6 +68,9 @@ module.exports = class DappLib {
 
   /****** HelloWorld ******/
 
+  /*
+    signer - account that will receive its own data
+  */
   static async HelloWorldInstance(data) {
 
     let result = await Blockchain.post({
@@ -86,6 +89,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we want the Tenant ID for
+  */
   static async HelloWorldGetClientTenants(data) {
 
     let result = await Blockchain.get({
@@ -106,6 +112,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+  */
   static async HelloWorldGreeting(data) {
 
     let result = await Blockchain.get({
@@ -128,7 +137,9 @@ module.exports = class DappLib {
 
   /****** Tribes ******/
 
-  // Run by a user (like someone who wants a collection)
+  /*
+    Do not call this function.
+  */
   static async TribesGetPackage(data) {
 
     let result = await Blockchain.post({
@@ -148,6 +159,9 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    signer - account that will receive its own data
+  */
   static async TribesInstance(data) {
 
     let result = await Blockchain.post({
@@ -167,6 +181,13 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+    newTribeName - the Tribe name to be created
+    ipfsHash - either `N/A` (meaning no image provided) or a link to
+      ipfs where the image lives
+    description - a description of the Tribe
+  */
   static async TribesAddTribe(data) {
 
     if (data.files.length > 1) {
@@ -219,6 +240,11 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    signer - the account that is joining the Tribe
+    tenantOwner - the owner of the Tenant you want to interact with
+    tribeName - the name of the Tribe that `signer` wants to join
+  */
   static async TribesJoinTribe(data) {
 
     let result = await Blockchain.post({
@@ -241,6 +267,10 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    signer - the account that is leaving their Tribe
+    tenantOwner - the owner of the Tenant you want to interact with
+  */
   static async TribesLeaveTribe(data) {
 
     let result = await Blockchain.post({
@@ -262,6 +292,10 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we are looking at to get their current Tribe
+    tenantOwner - the owner of the Tenant you want to interact with
+  */
   static async TribesGetCurrentTribe(data) {
 
     let result = await Blockchain.get({
@@ -284,6 +318,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+  */
   static async TribesGetAllTribes(data) {
 
     let result = await Blockchain.get({
@@ -304,6 +341,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we want the Tenant ID for
+  */
   static async TribesGetClientTenants(data) {
 
     let result = await Blockchain.get({
@@ -326,7 +366,9 @@ module.exports = class DappLib {
 
   /****** NFTMarketplace ******/
 
-  // Run by a user (like someone who wants a collection)
+  /*
+    Do not call this function
+  */
   static async MarketplaceGetPackage(data) {
 
     let result = await Blockchain.post({
@@ -346,6 +388,9 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    signer - account that will receive its own data
+  */
   static async MarketplaceInstance(data) {
 
     let result = await Blockchain.post({
@@ -365,6 +410,11 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    signer - the account that is unlisting an NFT from their marketplace
+    tenantOwner - the owner of the Tenant you want to interact with
+    id - id of the NFT we'd like to unlist
+  */
   static async MarketplaceUnlist(data) {
 
     let result = await Blockchain.post({
@@ -387,6 +437,13 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    signer - the account that is listing NFTs for sale
+    tenantOwner - the owner of the Tenant you want to interact with
+    ids - an array of the ids `signer` wants to list (they must)
+      own them
+    price - the price of the NFTs (must be of type double, ex. `50.0`)
+  */
   static async MarketplaceList(data) {
 
     let result = await Blockchain.post({
@@ -410,6 +467,12 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    signer - account purchasing the NFTs
+    tenantOwner - the owner of the Tenant you want to interact with
+    id - the id of the NFT to be purchased
+    marketplace - the address of the person who's selling the NFTs
+  */
   static async MarketplacePurchase(data) {
 
     let result = await Blockchain.post({
@@ -433,6 +496,10 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we are looking at to see their listed NFT ids
+    tenantOwner - the owner of the Tenant you want to interact with
+  */
   static async MarketplaceGetIDs(data) {
 
     let result = await Blockchain.get({
@@ -443,7 +510,7 @@ module.exports = class DappLib {
       'nftmarketplace_get_ids',
       {
         account: { value: data.account, type: t.Address },
-        tenantID: { value: data.tenantOwner, type: t.Address }
+        tenantOwner: { value: data.tenantOwner, type: t.Address }
       }
     );
 
@@ -454,6 +521,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we want the Tenant ID for
+  */
   static async MarketplaceGetClientTenants(data) {
 
     let result = await Blockchain.get({
@@ -476,7 +546,9 @@ module.exports = class DappLib {
 
   /****** SimpleNFTMarketplace ******/
 
-  // Run by a user (like someone who wants a collection)
+  /*
+    Do not call this function
+  */
   static async SimpleNFTMarketplaceGetPackage(data) {
 
     let result = await Blockchain.post({
@@ -496,6 +568,9 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    signer - account that will receive its own data
+  */
   static async SimpleNFTMarketplaceInstance(data) {
 
     let result = await Blockchain.post({
@@ -515,6 +590,12 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    signer - the account that is unlisting an NFT from their marketplace
+    tenantOwner - the owner of the Tenant you want to interact with
+    id - id of the NFT we'd like to unlist
+    simpleNFTTenantOwner - the address of the owner of the SimpleNFT tenant
+  */
   static async SimpleNFTMarketplaceUnlist(data) {
 
     let result = await Blockchain.post({
@@ -538,6 +619,14 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    signer - the account that is listing NFTs for sale
+    tenantOwner - the owner of the Tenant you want to interact with
+    ids - an array of the ids `signer` wants to list (they must)
+      own them
+    price - the price of the NFTs (must be of type double, ex. `50.0`)
+    simpleNFTTenantOwner - the address of the owner of the SimpleNFT tenant
+  */
   static async SimpleNFTMarketplaceList(data) {
 
     let result = await Blockchain.post({
@@ -562,6 +651,13 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    signer - account purchasing the NFTs
+    tenantOwner - the owner of the Tenant you want to interact with
+    id - the id of the NFT to be purchased
+    marketplace - the address of the person who's selling the NFTs
+    simpleNFTTenantOwner - the address of the owner of the SimpleNFT tenant
+  */
   static async SimpleNFTMarketplacePurchase(data) {
 
     let result = await Blockchain.post({
@@ -586,6 +682,11 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - account we're looking at to see their listed NFT ids
+    tenantOwner - the owner of the Tenant you want to interact with
+    simpleNFTTenantOwner - the address of the owner of the SimpleNFT tenant
+  */
   static async SimpleNFTMarketplaceGetIDs(data) {
 
     let result = await Blockchain.get({
@@ -608,6 +709,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we want the Tenant ID for
+  */
   static async SimpleNFTMarketplaceGetClientTenants(data) {
 
     let result = await Blockchain.get({
@@ -628,6 +732,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we're reading the FlowToken balance for
+  */
   static async FlowTokenGetBalance(data) {
 
     let result = await Blockchain.get({
@@ -650,6 +757,9 @@ module.exports = class DappLib {
 
   /****** SimpleToken ******/
 
+  /*
+    signer - account that will receive its own data
+  */
   static async SimpleTokenInstance(data) {
 
     let result = await Blockchain.post({
@@ -669,7 +779,9 @@ module.exports = class DappLib {
 
   }
 
-  // Run by a user (like someone who wants a collection)
+  /*
+    Do not call this function
+  */
   static async SimpleTokenGetPackage(data) {
 
     let result = await Blockchain.post({
@@ -689,6 +801,10 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+    recipient - the address of the person receiving the minting capability
+  */
   static async SimpleTokenGiveMinter(data) {
 
     let result = await Blockchain.post({
@@ -710,6 +826,12 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+    signer - the account minting the tokens
+    amount - the amount of token to mint (must be of type double, ex. `50.0`)
+    recipient - the address of the account receiving the tokens
+  */
   static async SimpleTokenMintFT(data) {
 
     let result = await Blockchain.post({
@@ -733,6 +855,12 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+    signer - the account transfering the tokens
+    amount - the amount of token to transfer (must be of type double, ex. `50.0`)
+    recipient - the address of the account receiving the tokens
+  */
   static async SimpleTokenTransferFT(data) {
 
     let result = await Blockchain.post({
@@ -756,6 +884,10 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+    account - the account we're reading the SimpleToken balance for
+  */
   static async SimpleTokenGetBalance(data) {
 
     let result = await Blockchain.get({
@@ -777,6 +909,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we want the Tenant ID for
+  */
   static async SimpleTokenGetClientTenants(data) {
 
     let result = await Blockchain.get({
@@ -799,7 +934,9 @@ module.exports = class DappLib {
 
   /****** SimpleNFT ******/
 
-  // Run by a user (like someone who wants a collection)
+  /*
+    Do not call this function
+  */
   static async SimpleNFTGetPackage(data) {
 
     let result = await Blockchain.post({
@@ -819,6 +956,9 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    signer - account that will receive its own data
+  */
   static async SimpleNFTInstance(data) {
 
     let result = await Blockchain.post({
@@ -838,6 +978,10 @@ module.exports = class DappLib {
 
   }
 
+  /*
+   tenantOwner - the owner of the Tenant you want to interact with
+   recipient - the account reciving the minting capability
+ */
   static async SimpleNFTGiveMinter(data) {
 
     let result = await Blockchain.post({
@@ -859,6 +1003,12 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+   tenantOwner - the owner of the Tenant you want to interact with
+   signer - the person minting the NFT
+   name - the name of the NFT
+   recipient - the person receiving the NFT
+ */
   static async SimpleNFTMintNFT(data) {
 
     let result = await Blockchain.post({
@@ -882,6 +1032,12 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+    signer - the account transfering the NFT
+    recipient - the account receiving the transfered NFT
+    withdrawID - the id of the NFT to transfer
+  */
   static async SimpleNFTTransferNFT(data) {
 
     let result = await Blockchain.post({
@@ -905,6 +1061,10 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+   tenantOwner - the owner of the Tenant you want to interact with
+   account - the account we're reading the NFT ids from
+ */
   static async SimpleNFTGetNFTIDs(data) {
 
     let result = await Blockchain.get({
@@ -926,6 +1086,9 @@ module.exports = class DappLib {
     }
   }
 
+  /*
+    account - the account we want the Tenant ID for
+  */
   static async SimpleNFTGetClientTenants(data) {
 
     let result = await Blockchain.get({
@@ -948,6 +1111,9 @@ module.exports = class DappLib {
 
   /****** Rewards ******/
 
+  /*
+    signer - account that will receive its own data
+  */
   static async RewardsInstance(data) {
 
     let result = await Blockchain.post({
@@ -970,7 +1136,9 @@ module.exports = class DappLib {
 
   }
 
-  // Run by a user (like someone who wants a collection)
+  /*
+    Do not call this function
+  */
   static async RewardsGetPackage(data) {
 
     let result = await Blockchain.post({
@@ -990,6 +1158,10 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    tenantOwner - the owner of the Tenant you want to interact with
+    signer - the account we want to give the Reward to
+  */
   static async RewardsGiveReward(data) {
 
     let result = await Blockchain.post({
@@ -1012,6 +1184,9 @@ module.exports = class DappLib {
 
   }
 
+  /*
+    account - the account we want the Tenant ID for
+  */
   static async RewardsGetClientTenants(data) {
 
     let result = await Blockchain.get({
