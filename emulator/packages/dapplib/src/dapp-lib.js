@@ -270,7 +270,7 @@ module.exports = class DappLib {
     );
 
     return {
-      type: DappLib.DAPP_RESULT_STRING,
+      type: DappLib.DAPP_RESULT_OBJECT,
       label: 'Current Tribe',
       result: result.callData
     }
