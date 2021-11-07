@@ -53,7 +53,7 @@ export default class DappPage extends LitElement {
           </ul>
           <h3 class="mt-3 text-3xl">Sample Projects</h3>
           <ul>
-            <li class="mt-3"><a href="/tribessample-page">Tribes Sample</a></li>
+            <li class="mt-3"><a href="/">Tribes Sample</a></li>
 
           </ul>
         </div>

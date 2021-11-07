@@ -49,6 +49,7 @@ export default class HarnessPage extends LitElement {
     let content = html`
       <div class="container m-auto">
         <div class="row fadeIn mt-3 p-2 block">
+          <h1 class="text-3xl">Hyperverse Modules</h1>
           <p class="mt-3">
             Here is a list of all the Modules you can choose from to begin your journey on the Hyperverse.
           </p>
