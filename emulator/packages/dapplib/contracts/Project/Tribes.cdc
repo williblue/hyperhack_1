@@ -37,6 +37,7 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
         access(contract) var tribes: {String: TribeData}
 
         pub fun getAllTribes(): {String: TribeData}
+        pub fun getTribeData(tribeName: String): TribeData
         access(contract) fun addNewTribe(newTribeName: String, ipfsHash: String)
         access(contract) fun addMember(tribe: String, member: Address)
         access(contract) fun removeMember(currentTribe: String, member: Address)
@@ -51,6 +52,10 @@ pub contract Tribes: IHyperverseModule, IHyperverseComposable {
 
         pub fun getAllTribes(): {String: TribeData} {
             return self.tribes
+        }
+
+        pub fun getTribeData(tribeName: String): TribeData {
+            return self.tribes[tribeName]!
         }
 
         pub fun addNewTribe(newTribeName: String, ipfsHash: String) {
