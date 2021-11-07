@@ -137,7 +137,7 @@ pub contract Rewards: IHyperverseModule, IHyperverseComposable {
             nftCollection.deposit(token: <- nftMinter.mintNFT(metadata: {"name": "Super Legendary Reward"}))
             TenantState.addRecipient(recipient: recipientPackage.owner!.address)
         } else {
-            panic("Sorry! You are not cool enough. Need more NFTs!!!")
+            panic("Sorry! This account needs more NFTs to get a Reward!")
         }
     }
     
