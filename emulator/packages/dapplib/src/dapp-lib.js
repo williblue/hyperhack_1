@@ -990,29 +990,6 @@ module.exports = class DappLib {
 
   }
 
-  static async RewardsMintNFT(data) {
-    console.log(data)
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.tenantOwner
-      }
-    },
-      'rewards_mint_nft',
-      {
-        recipient: { value: data.recipient, type: t.Address }
-      }
-    );
-
-    return {
-      type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
-  }
-
   static async RewardsGiveReward(data) {
 
     let result = await Blockchain.post({
