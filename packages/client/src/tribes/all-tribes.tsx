@@ -10,20 +10,17 @@ import { ACCOUNT } from "./shared"
 const AllTribes = () => {
   const navigate = useNavigate()
   const [allTribes, setAllTribes] = useState()
-  const [error, setError] = useState("")
 
   const getAllTribes = async () => {
-    try {
-      const data = {
-        tenantOwner: ACCOUNT.Admin,
-        account: ACCOUNT.Birbal,
-      }
-      const allTribes = await DappLib.TribesGetAllTribes(data)
-      setAllTribes(allTribes.result)
-    } catch (error) {
-      setError("There are currently no existing tribes.")
+    const data = {
+      tenantOwner: ACCOUNT.Admin,
+      account: ACCOUNT.Birbal,
     }
+    const allTribes = await DappLib.TribesGetAllTribes(data)
+    setAllTribes(allTribes.result)
+
   }
+
 
   const joinTribe = async (tribe: String) => {
     try {
@@ -35,7 +32,7 @@ const AllTribes = () => {
 
       const result = await DappLib.TribesJoinTribe(data)
       if (result) navigate("/my-tribe")
-    } catch (error) {}
+    } catch (error) { }
   }
 
   useEffect(() => {
@@ -47,23 +44,25 @@ const AllTribes = () => {
       <Nav />
       <div className="container">
         <h1>Tribes</h1>
-        <h5>Select Your Tribe</h5>
-        {!allTribes && (
+        {Object.keys(allTribes ?? {}).length === 0 ? (
           <>
-            {" "}
-            <h5>{error}</h5>
+            <h5>There are currently no existing tribes.</h5>
             <a href="/">Go back home</a>
           </>
-        )}
-        {allTribes && (
-          <div className="all-tribes">
-            {Object.entries(allTribes).map(([k, v]) => (
-              <div key={k} onClick={() => joinTribe(k)}>
-                <img className="cards" src={v.ipfsHash} alt={k} />
-              </div>
-            ))}
-          </div>
-        )}
+        ) :
+          <>
+            <h5>Select Your Tribe</h5>
+            <div className="all-tribes">
+              {/* @ts-ignore */}
+              {Object.entries(allTribes).map(([k, v]) => (
+                <div key={k} onClick={() => joinTribe(k)}>
+                  {/* @ts-ignore */}
+                  <img className="cards" src={v.ipfsHash} alt={k} />
+                </div>
+              ))}
+            </div>
+          </>
+        }
       </div>
     </main>
   )

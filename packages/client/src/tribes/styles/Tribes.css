@@ -140,6 +140,7 @@ p {
 }
 
 .cards {
+  cursor: pointer;
   width: 300px;
   height: 400px;
   overflow: hidden;
