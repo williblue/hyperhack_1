@@ -33,7 +33,7 @@ export default class DappPage extends LitElement {
     let content = html`
       <div class="container m-auto">
         <div class="row fadeIn mt-3 p-2 block">
-          <h2 class="text-6xl">🎉 Welcome to HyperHack!</h2>
+          <h2 class="text-6xl">🎉 Welcome to Hyperhack!</h2>
           <p class="mt-3">
             Your Dapp is ready, and the world is waiting for you to create
             something amazing.
