@@ -1,22 +1,22 @@
-import React, { useState, useEffect, SyntheticEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, SyntheticEvent } from "react"
+import { useNavigate } from "react-router-dom"
 //@ts-ignore
-import DappLib from "@decentology/dappstarter-dapplib";
-import './styles/Tribes.css'
-import Nav from './components/Nav';
+import DappLib from "@decentology/dappstarter-dapplib"
+import "./styles/Tribes.css"
+import Nav from "./components/Nav"
 
-import { ACCOUNT } from './shared';
+import { ACCOUNT } from "./shared"
 
 const TribesPage = (props: any) => {
   const [currentTribe, setCurrentTribe] = useState()
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState(false)
   const [error, setError] = useState(false)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const getCurrentTribe = async () => {
     const data = {
       tenantOwner: ACCOUNT.Admin,
-      account: ACCOUNT.Birbal
+      account: ACCOUNT.Birbal,
     }
     try {
       const stuff = await DappLib.TribesGetCurrentTribe(data)
@@ -24,7 +24,7 @@ const TribesPage = (props: any) => {
       setCurrentTribe(stuff.result)
     } catch (error) {
       // This will only happen if you haven't run "instance"
-      // for an account under the Tenant module, 
+      // for an account under the Tenant module,
       // and your `tenantOwner` isn't that same account.
       setError(true)
     }
@@ -40,27 +40,39 @@ const TribesPage = (props: any) => {
       <div className="hero">
         <div className="header">
           <h1> Tribes</h1>
-          {!currentTribe ? <button className="join" onClick={() => { error ? setShowError(true) : navigate('/all-tribes') }}>Join A Tribe</button> :
-            <button className="join" onClick={() => navigate('/my-tribe')}>View Your Tribe</button>}
+          {!currentTribe ? (
+            <button
+              className="join"
+              onClick={() => {
+                error ? setShowError(true) : navigate("/all-tribes")
+              }}
+            >
+              Join A Tribe
+            </button>
+          ) : (
+            <button className="join" onClick={() => navigate("/my-tribe")}>
+              View Your Tribe
+            </button>
+          )}
           {showError && (
-            < div className="error">
+            <div className="error">
               <p>Two things could be wrong:</p>
               <ul>
-                <li>1) You have not called `instance` for an account in the Tribes module.</li>
-                <li>2) The `tenantOwner` field in `getCurrentTribe` function is not the account you used in the first step.</li>
+                <li>
+                  1) You have not called `instance` for an account in the Tribes
+                  module.
+                </li>
+                <li>
+                  2) The `tenantOwner` field in `getCurrentTribe` function is
+                  not the account you used in the first step.
+                </li>
               </ul>
             </div>
           )}
-
         </div>
-
       </div>
-    </main >
-
-  );
-
+    </main>
+  )
 }
 
-
-
-export default TribesPage;
+export default TribesPage
