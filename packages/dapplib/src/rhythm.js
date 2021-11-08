@@ -314,7 +314,7 @@ const dappConfigFile = path.join(__dirname, 'dapp-config.json');
 
       emitter.on('file', filePath => {
         for (let f = 0; f < folders.length; f++) {
-          if ((filePath.endsWith('.cdc')) && (filePath.indexOf(`/contracts/${folders[f]}/`) > -1)) {
+          if ((filePath.endsWith('.cdc')) && (filePath.indexOf(`/contracts/${folders[f]}/`) > -1 || filePath.indexOf(`\\contracts\\${folders[f]}\\`) > -1)) {
             // Gets all the dependencies for the contracts in this specific folder
             let { code, contractNames, deps } = getContractDependencies(folders[f], filePath);
 
