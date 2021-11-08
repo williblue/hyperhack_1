@@ -61,7 +61,7 @@ const dappConfigFile = path.join(__dirname, 'dapp-config.json');
 
     // Unpopulated dappConfig with service info only
     dappConfig = {
-      httpUri: 'http://localhost:5000',
+      httpUri:  process.env.DAPPSTARTER_BLOCKCHAIN_HOST ? process.env.DAPPSTARTER_BLOCKCHAIN_HOST : 'http://localhost:5000',
       contracts: chainContracts,
       accounts: [],
       serviceWallet: serviceWallet,
