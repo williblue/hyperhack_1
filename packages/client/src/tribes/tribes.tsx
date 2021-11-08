@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import DappLib from "@decentology/dappstarter-dapplib"
 import "./styles/Tribes.css"
 import Nav from "./components/Nav"
+import Footer from "./components/Footer"
 
 import { ACCOUNT } from "./shared"
 
@@ -72,6 +73,7 @@ const TribesPage = (props: any) => {
           )}
         </div>
       </div>
+      <Footer />
     </main>
   )
 }

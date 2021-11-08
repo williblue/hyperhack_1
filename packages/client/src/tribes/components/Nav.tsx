@@ -6,7 +6,7 @@ const Nav = () => {
       <a href="/" className="logo">
         T
       </a>
-      <a href="/">About</a>
+      <a href="https://docs-hyperhack.decentology.com/learn-with-examples" target="_blank" rel="noreferrer" >About</a>
     </nav>
   )
 }
