@@ -1,6 +1,7 @@
 dist/
 build/
 target/
+node_modules/
 
 src/dapp-config.json
 src/dapp-scripts.js
