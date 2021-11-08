@@ -1,176 +1,171 @@
-'use strict';
-const Blockchain = require('./blockchain');
-const dappConfig = require('./dapp-config.json');
-const ClipboardJS = require('clipboard');
-const BN = require('bn.js'); // Required for injected code
-const manifest = require('../manifest.json');
-const ipfsClient = require('ipfs-http-client');
-const bs58 = require('bs58');
-const t = require('@onflow/types');
-
+"use strict";
+const Blockchain = require("./blockchain");
+const dappConfig = require("./dapp-config.json");
+const ClipboardJS = require("clipboard");
+const BN = require("bn.js"); // Required for injected code
+const manifest = require("../manifest.json");
+const ipfsClient = require("ipfs-http-client");
+const bs58 = require("bs58");
+const t = require("@onflow/types");
 
 module.exports = class DappLib {
-
   /****** AUTH ******/
   static async GetAuth(data) {
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'auth_get_auth'
-    )
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "auth_get_auth"
+    );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   /****** SETUP ALL ******/
   static async SETUPALL(data) {
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'setupall_setup_all'
-    )
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "setupall_setup_all"
+    );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async HasAll(data) {
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'setupall_has_all',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "setupall_has_all",
+      {
+        account: { value: data.account, type: t.Address },
       }
-    )
+    );
 
     return {
       type: DappLib.DAPP_RESULT_BOOLEAN,
-      label: 'Has All Packages?',
-      result: result.callData
-    }
+      label: "Has All Packages?",
+      result: result.callData,
+    };
   }
 
   /****** HelloWorld ******/
 
   static async HelloWorldInstance(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'helloworld_instance'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "helloworld_instance"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async HelloWorldGetClientTenants(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'helloworld_get_client_tenants',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "helloworld_get_client_tenants",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'HelloWorld TenantID',
-      result: result.callData
-    }
+      label: "HelloWorld TenantID",
+      result: result.callData,
+    };
   }
 
   static async HelloWorldGreeting(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'helloworld_hello',
+    let result = await Blockchain.get(
       {
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "helloworld_hello",
+      {
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'Greeting',
-      result: result.callData
-    }
+      label: "Greeting",
+      result: result.callData,
+    };
   }
 
   /****** Tribes ******/
 
   // Run by a user (like someone who wants a collection)
   static async TribesGetPackage(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'tribes_get_package'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "tribes_get_package"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async TribesInstance(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'tribes_instance'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "tribes_instance"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async TribesAddTribe(data) {
-
     if (data.files.length > 1) {
-      throw "Too many images! Please supply 1 image for your Tribe."
+      throw "Too many images! Please supply 1 image for your Tribe.";
     }
 
     let image;
@@ -179,880 +174,872 @@ module.exports = class DappLib {
       let config = DappLib.getConfig();
 
       config.ipfs = {
-        host: 'ipfs.infura.io',
-        protocol: 'https',
-        port: 5001
-      }
+        host: "ipfs.infura.io",
+        protocol: "https",
+        port: 5001,
+      };
 
       // Push files to IPFS
-      let ipfsResult = await DappLib.ipfsUpload(config, data.files, folder, (bytes) => {
-        console.log(bytes);
-      });
+      let ipfsResult = await DappLib.ipfsUpload(
+        config,
+        data.files,
+        folder,
+        (bytes) => {
+          console.log(bytes);
+        }
+      );
 
       let file = ipfsResult[0];
-      console.log('IPFS file', file);
-      image = 'https://ipfs.infura.io/ipfs/' + file.cid.string;
+      console.log("IPFS file", file);
+      image = "https://ipfs.infura.io/ipfs/" + file.cid.string;
     } else {
-      image = "N/A"
+      image = "N/A";
     }
 
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.tenantOwner
-      }
-    },
-      'tribes_add_tribe',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.tenantOwner,
+        },
+      },
+      "tribes_add_tribe",
       {
         newTribeName: { value: data.newTribeName, type: t.String },
         ipfsHash: { value: image, type: t.String },
-        description: { value: data.description, type: t.String }
+        description: { value: data.description, type: t.String },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async TribesJoinTribe(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'tribes_join_tribe',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "tribes_join_tribe",
       {
         tenantOwner: { value: data.tenantOwner, type: t.Address },
-        tribeName: { value: data.tribeName, type: t.String }
+        tribeName: { value: data.tribeName, type: t.String },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async TribesLeaveTribe(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'tribes_leave_tribe',
+    let result = await Blockchain.post(
       {
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "tribes_leave_tribe",
+      {
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async TribesGetCurrentTribe(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'tribes_get_current_tribe',
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "tribes_get_current_tribe",
       {
         account: { value: data.account, type: t.Address },
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
-    console.log(result.callData)
+    console.log(result.callData);
 
     return {
       type: DappLib.DAPP_RESULT_OBJECT,
-      label: 'Current Tribe',
-      result: result.callData
-    }
+      label: "Current Tribe",
+      result: result.callData,
+    };
   }
 
   static async TribesGetAllTribes(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'tribes_get_all_tribes',
+    let result = await Blockchain.get(
       {
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "tribes_get_all_tribes",
+      {
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_OBJECT,
-      label: 'All the Tribes',
-      result: result.callData
-    }
+      label: "All the Tribes",
+      result: result.callData,
+    };
   }
 
   static async TribesGetClientTenants(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'tribes_get_client_tenants',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "tribes_get_client_tenants",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'Tribes TenantID',
-      result: result.callData
-    }
+      label: "Tribes TenantID",
+      result: result.callData,
+    };
   }
 
   /****** NFTMarketplace ******/
 
   // Run by a user (like someone who wants a collection)
   static async MarketplaceGetPackage(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'nftmarketplace_get_package'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "nftmarketplace_get_package"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async MarketplaceInstance(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'nftmarketplace_instance'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "nftmarketplace_instance"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async MarketplaceUnlist(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'nftmarketplace_unlist_sale',
+    let result = await Blockchain.post(
       {
-        tenantOwner: { value: data.tenantOwner, type: t.Address },
-        id: { value: parseInt(data.id), type: t.UInt64 }
-      }
-    );
-
-    return {
-      type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-  }
-
-  static async MarketplaceList(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'nftmarketplace_list_for_sale',
-      {
-        tenantOwner: { value: data.tenantOwner, type: t.Address },
-        ids: DappLib.formatFlowArray(data.ids, t.UInt64),
-        price: { value: data.price, type: t.UFix64 }
-      }
-    );
-
-    return {
-      type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-  }
-
-  static async MarketplacePurchase(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'nftmarketplace_purchase',
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "nftmarketplace_unlist_sale",
       {
         tenantOwner: { value: data.tenantOwner, type: t.Address },
         id: { value: parseInt(data.id), type: t.UInt64 },
-        marketplace: { value: data.marketplace, type: t.Address }
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
+  }
+
+  static async MarketplaceList(data) {
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "nftmarketplace_list_for_sale",
+      {
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
+        ids: DappLib.formatFlowArray(data.ids, t.UInt64),
+        price: { value: data.price, type: t.UFix64 },
+      }
+    );
+
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
+  }
+
+  static async MarketplacePurchase(data) {
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "nftmarketplace_purchase",
+      {
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
+        id: { value: parseInt(data.id), type: t.UInt64 },
+        marketplace: { value: data.marketplace, type: t.Address },
+      }
+    );
+
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async MarketplaceGetIDs(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'nftmarketplace_get_ids',
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "nftmarketplace_get_ids",
       {
         account: { value: data.account, type: t.Address },
-        tenantID: { value: data.tenantOwner, type: t.Address }
+        tenantID: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_ARRAY,
-      label: 'SaleCollection IDs',
-      result: result.callData
-    }
+      label: "SaleCollection IDs",
+      result: result.callData,
+    };
   }
 
   static async MarketplaceGetClientTenants(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'nftmarketplace_get_client_tenants',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "nftmarketplace_get_client_tenants",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'Marketplace TenantID',
-      result: result.callData
-    }
+      label: "Marketplace TenantID",
+      result: result.callData,
+    };
   }
 
   /****** SimpleNFTMarketplace ******/
 
   // Run by a user (like someone who wants a collection)
   static async SimpleNFTMarketplaceGetPackage(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simplenftmarketplace_get_package'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simplenftmarketplace_get_package"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTMarketplaceInstance(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simplenftmarketplace_instance'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simplenftmarketplace_instance"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTMarketplaceUnlist(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simplenftmarketplace_unlist_sale',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simplenftmarketplace_unlist_sale",
       {
         tenantOwner: { value: data.tenantOwner, type: t.Address },
         id: { value: parseInt(data.id), type: t.UInt64 },
-        simpleNFTTenantOwner: { value: data.simpleNFTTenantOwner, type: t.Address }
+        simpleNFTTenantOwner: {
+          value: data.simpleNFTTenantOwner,
+          type: t.Address,
+        },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTMarketplaceList(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simplenftmarketplace_list_for_sale',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simplenftmarketplace_list_for_sale",
       {
         tenantOwner: { value: data.tenantOwner, type: t.Address },
         ids: DappLib.formatFlowArray(data.ids, t.UInt64),
         price: { value: data.price, type: t.UFix64 },
-        simpleNFTTenantOwner: { value: data.simpleNFTTenantOwner, type: t.Address }
+        simpleNFTTenantOwner: {
+          value: data.simpleNFTTenantOwner,
+          type: t.Address,
+        },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTMarketplacePurchase(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simplenftmarketplace_purchase',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simplenftmarketplace_purchase",
       {
         tenantOwner: { value: data.tenantOwner, type: t.Address },
         id: { value: parseInt(data.id), type: t.UInt64 },
         marketplace: { value: data.marketplace, type: t.Address },
-        simpleNFTTenantOwner: { value: data.simpleNFTTenantOwner, type: t.Address }
+        simpleNFTTenantOwner: {
+          value: data.simpleNFTTenantOwner,
+          type: t.Address,
+        },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTMarketplaceGetIDs(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'simplenftmarketplace_get_ids',
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "simplenftmarketplace_get_ids",
       {
         account: { value: data.account, type: t.Address },
         tenantOwner: { value: data.tenantOwner, type: t.Address },
-        simpleNFTTenantOwner: { value: data.simpleNFTTenantOwner, type: t.Address }
+        simpleNFTTenantOwner: {
+          value: data.simpleNFTTenantOwner,
+          type: t.Address,
+        },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_ARRAY,
-      label: 'SaleCollection IDs',
-      result: result.callData
-    }
+      label: "SaleCollection IDs",
+      result: result.callData,
+    };
   }
 
   static async SimpleNFTMarketplaceGetClientTenants(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'simplenftmarketplace_get_client_tenants',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "simplenftmarketplace_get_client_tenants",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'SimpleNFTMarketplace TenantID',
-      result: result.callData
-    }
+      label: "SimpleNFTMarketplace TenantID",
+      result: result.callData,
+    };
   }
 
   static async FlowTokenGetBalance(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'simplenftmarketplace_flowtoken_get_balance',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "simplenftmarketplace_flowtoken_get_balance",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_BIG_NUMBER,
-      label: 'FlowToken Balance',
-      result: result.callData
-    }
+      label: "FlowToken Balance",
+      result: result.callData,
+    };
   }
 
   /****** SimpleToken ******/
 
   static async SimpleTokenInstance(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_ft_instance'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_ft_instance"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   // Run by a user (like someone who wants a collection)
   static async SimpleTokenGetPackage(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_ft_get_package'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_ft_get_package"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleTokenGiveMinter(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.tenantOwner
-      }
-    },
-      'simple_ft_give_minter',
+    let result = await Blockchain.post(
       {
-        recipient: { value: data.recipient, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.tenantOwner,
+        },
+      },
+      "simple_ft_give_minter",
+      {
+        recipient: { value: data.recipient, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleTokenMintFT(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_ft_mint_ft',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_ft_mint_ft",
       {
         recipient: { value: data.recipient, type: t.Address },
         tenantOwner: { value: data.tenantOwner, type: t.Address },
-        amount: { value: data.amount, type: t.UFix64 }
+        amount: { value: data.amount, type: t.UFix64 },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleTokenTransferFT(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_ft_transfer_ft',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_ft_transfer_ft",
       {
         recipient: { value: data.recipient, type: t.Address },
         amount: { value: data.amount, type: t.UFix64 },
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleTokenGetBalance(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'simple_ft_get_balance',
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "simple_ft_get_balance",
       {
         account: { value: data.account, type: t.Address },
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_BIG_NUMBER,
-      label: 'SimpleToken Balance',
-      result: result.callData
-    }
+      label: "SimpleToken Balance",
+      result: result.callData,
+    };
   }
 
   static async SimpleTokenGetClientTenants(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'simple_ft_get_client_tenants',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "simple_ft_get_client_tenants",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'SimpleToken TenantID',
-      result: result.callData
-    }
+      label: "SimpleToken TenantID",
+      result: result.callData,
+    };
   }
 
   /****** SimpleNFT ******/
 
   // Run by a user (like someone who wants a collection)
   static async SimpleNFTGetPackage(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_nft_get_package'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_nft_get_package"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTInstance(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_nft_instance'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_nft_instance"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTGiveMinter(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.tenantOwner
-      }
-    },
-      'simple_nft_give_minter',
+    let result = await Blockchain.post(
       {
-        recipient: { value: data.recipient, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.tenantOwner,
+        },
+      },
+      "simple_nft_give_minter",
+      {
+        recipient: { value: data.recipient, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTMintNFT(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_nft_mint_nft',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_nft_mint_nft",
       {
         recipient: { value: data.recipient, type: t.Address },
         tenantOwner: { value: data.tenantOwner, type: t.Address },
-        name: { value: data.name, type: t.String }
+        name: { value: data.name, type: t.String },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTTransferNFT(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'simple_nft_transfer_nft',
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "simple_nft_transfer_nft",
       {
         recipient: { value: data.recipient, type: t.Address },
         withdrawID: { value: parseInt(data.withdrawID), type: t.UInt64 },
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async SimpleNFTGetNFTIDs(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'simple_nft_get_nft_ids',
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "simple_nft_get_nft_ids",
       {
         account: { value: data.account, type: t.Address },
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_ARRAY,
-      label: 'NFT IDs in Account Collection',
-      result: result.callData
-    }
+      label: "NFT IDs in Account Collection",
+      result: result.callData,
+    };
   }
 
   static async SimpleNFTGetClientTenants(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'simple_nft_get_client_tenants',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "simple_nft_get_client_tenants",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'SimpleNFT TenantID',
-      result: result.callData
-    }
+      label: "SimpleNFT TenantID",
+      result: result.callData,
+    };
   }
 
   /****** Rewards ******/
 
   static async RewardsInstance(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'rewards_instance',
+    let result = await Blockchain.post(
       {
-        numForReward: { value: parseInt(data.numForReward), type: t.Int }
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "rewards_instance",
+      {
+        numForReward: { value: parseInt(data.numForReward), type: t.Int },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   // Run by a user (like someone who wants a collection)
   static async RewardsGetPackage(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'rewards_get_package'
+    let result = await Blockchain.post(
+      {
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "rewards_get_package"
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async RewardsMintNFT(data) {
-    console.log(data)
+    console.log(data);
 
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.tenantOwner
-      }
-    },
-      'rewards_mint_nft',
+    let result = await Blockchain.post(
       {
-        recipient: { value: data.recipient, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.tenantOwner,
+        },
+      },
+      "rewards_mint_nft",
+      {
+        recipient: { value: data.recipient, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async RewardsGiveReward(data) {
-
-    let result = await Blockchain.post({
-      config: DappLib.getConfig(),
-      roles: {
-        proposer: data.signer
-      }
-    },
-      'rewards_give_reward',
+    let result = await Blockchain.post(
       {
-        tenantOwner: { value: data.tenantOwner, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {
+          proposer: data.signer,
+        },
+      },
+      "rewards_give_reward",
+      {
+        tenantOwner: { value: data.tenantOwner, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_TX_HASH,
-      label: 'Transaction Hash',
-      result: result.callData.transactionId
-    }
-
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
   }
 
   static async RewardsGetClientTenants(data) {
-
-    let result = await Blockchain.get({
-      config: DappLib.getConfig(),
-      roles: {
-      }
-    },
-      'rewards_get_client_tenants',
+    let result = await Blockchain.get(
       {
-        account: { value: data.account, type: t.Address }
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "rewards_get_client_tenants",
+      {
+        account: { value: data.account, type: t.Address },
       }
     );
 
     return {
       type: DappLib.DAPP_RESULT_STRING,
-      label: 'Rewards TenantID',
-      result: result.callData
-    }
+      label: "Rewards TenantID",
+      result: result.callData,
+    };
   }
 
   /****** Helpers ******/
@@ -1066,19 +1053,20 @@ module.exports = class DappLib {
     ex. { key: t.String, value: t.Int }
   */
   static formatFlowDictionary(data, types) {
-    let newData = []
-    let dataKeys = Object.keys(data)
+    let newData = [];
+    let dataKeys = Object.keys(data);
 
     for (let key of dataKeys) {
-      if (types.key.label.includes("Int")) key = parseInt(key)
-      else if (types.key == t.Bool) key = (key === 'true');
+      if (types.key.label.includes("Int")) key = parseInt(key);
+      else if (types.key == t.Bool) key = key === "true";
 
       if (isNaN(data[key])) continue;
-      else if (types.value.label.includes("Int")) data[key] = parseInt(data[key])
-      else if (types.value == t.Bool) data[key] = (data[key] === 'true');
-      newData.push({ key: key, value: data[key] })
+      else if (types.value.label.includes("Int"))
+        data[key] = parseInt(data[key]);
+      else if (types.value == t.Bool) data[key] = data[key] === "true";
+      newData.push({ key: key, value: data[key] });
     }
-    return { value: newData, type: t.Dictionary(types) }
+    return { value: newData, type: t.Dictionary(types) };
   }
 
   /*
@@ -1089,20 +1077,19 @@ module.exports = class DappLib {
     ex. t.String
   */
   static formatFlowArray(data, type) {
-    if (type == t.String) return { value: data, type: t.Array(type) }
+    if (type == t.String) return { value: data, type: t.Array(type) };
 
-    let newData = []
+    let newData = [];
     for (let element of data) {
-      if (type.label.includes("Int")) element = parseInt(element)
-      else if (type == t.Bool) element = (element === 'true');
+      if (type.label.includes("Int")) element = parseInt(element);
+      else if (type == t.Bool) element = element === "true";
 
-      newData.push(element)
+      newData.push(element);
     }
-    return { value: newData, type: t.Array(type) }
+    return { value: newData, type: t.Array(type) };
   }
 
   static async ipfsUpload(config, files, wrapWithDirectory, progressCallback) {
-
     let results = [];
     if (files.length < 1) {
       return results;
@@ -1112,14 +1099,14 @@ module.exports = class DappLib {
     files.map((file) => {
       filesToUpload.push({
         path: file.name,
-        content: file
-      })
+        content: file,
+      });
     });
     const options = {
       wrapWithDirectory: wrapWithDirectory,
       pin: true,
-      progress: progressCallback
-    }
+      progress: progressCallback,
+    };
 
     for await (const result of ipfs.add(filesToUpload, options)) {
       if (wrapWithDirectory && result.path !== "") {
@@ -1136,7 +1123,10 @@ module.exports = class DappLib {
   static formatIpfsHash(a) {
     let config = DappLib.getConfig();
     let url = `${config.ipfs.protocol}://${config.ipfs.host}/ipfs/${a}`;
-    return `<strong class="teal lighten-5 p-1 black-text number copy-target" title="${url}"><a href="${url}" target="_new">${a.substr(0, 6)}...${a.substr(a.length - 4, 4)}</a></strong>${DappLib.addClippy(a)}`;
+    return `<strong class="teal lighten-5 p-1 black-text number copy-target" title="${url}"><a href="${url}" target="_new">${a.substr(
+      0,
+      6
+    )}...${a.substr(a.length - 4, 4)}</a></strong>${DappLib.addClippy(a)}`;
   }
 
   /**
@@ -1147,88 +1137,86 @@ module.exports = class DappLib {
     const decoded = bs58.decode(multihash);
 
     return {
-      digest: `0x${decoded.slice(2).toString('hex')}`,
+      digest: `0x${decoded.slice(2).toString("hex")}`,
       hashFunction: decoded[0],
       digestLength: decoded[1],
     };
   }
 
-
-
-
   /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DAPP LIBRARY  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
   static get DAPP_STATE_CONTRACT() {
-    return 'dappStateContract'
+    return "dappStateContract";
   }
   static get DAPP_CONTRACT() {
-    return 'dappContract'
+    return "dappContract";
   }
 
   static get DAPP_STATE_CONTRACT_WS() {
-    return 'dappStateContractWs'
+    return "dappStateContractWs";
   }
   static get DAPP_CONTRACT_WS() {
-    return 'dappContractWs'
+    return "dappContractWs";
   }
 
   static get DAPP_RESULT_BIG_NUMBER() {
-    return 'big-number'
+    return "big-number";
   }
 
   static get DAPP_RESULT_ACCOUNT() {
-    return 'account'
+    return "account";
   }
 
   static get DAPP_RESULT_TX_HASH() {
-    return 'tx-hash'
+    return "tx-hash";
   }
 
   static get DAPP_RESULT_IPFS_HASH_ARRAY() {
-    return 'ipfs-hash-array'
+    return "ipfs-hash-array";
   }
 
   static get DAPP_RESULT_SIA_HASH_ARRAY() {
-    return 'sia-hash-array'
+    return "sia-hash-array";
   }
 
   static get DAPP_RESULT_ARRAY() {
-    return 'array'
+    return "array";
   }
 
   static get DAPP_RESULT_OBJECT() {
-    return 'object'
+    return "object";
   }
 
   static get DAPP_RESULT_STRING() {
-    return 'string'
+    return "string";
   }
 
   static get DAPP_RESULT_ERROR() {
-    return 'error'
+    return "error";
   }
 
   static async addEventHandler(contract, event, params, callback) {
-    Blockchain.handleEvent({
-      config: DappLib.getConfig(),
-      contract: contract,
-      params: params || {}
-    },
+    Blockchain.handleEvent(
+      {
+        config: DappLib.getConfig(),
+        contract: contract,
+        params: params || {},
+      },
       event,
       (error, result) => {
         if (error) {
           callback({
             event: event,
             type: DappLib.DAPP_RESULT_ERROR,
-            label: 'Error Message',
-            result: error
+            label: "Error Message",
+            result: error,
           });
         } else {
           callback({
             event: event,
             type: DappLib.DAPP_RESULT_OBJECT,
-            label: 'Event ' + event,
-            result: DappLib.getObjectNamedProperties(result)
+            label: "Event " + event,
+            result: DappLib.getObjectNamedProperties(result),
           });
         }
       }
@@ -1236,13 +1224,15 @@ module.exports = class DappLib {
   }
 
   static getTransactionHash(t) {
-    if (!t) { return ''; }
-    let value = '';
-    if (typeof t === 'string') {
+    if (!t) {
+      return "";
+    }
+    let value = "";
+    if (typeof t === "string") {
       value = t;
-    } else if (typeof t === 'object') {
-      if (t.hasOwnProperty('transactionHash')) {
-        value = t.transactionHash;       // Ethereum                
+    } else if (typeof t === "object") {
+      if (t.hasOwnProperty("transactionHash")) {
+        value = t.transactionHash; // Ethereum
       } else {
         value = JSON.stringify(t);
       }
@@ -1254,35 +1244,49 @@ module.exports = class DappLib {
     if (hint) {
       return `<p class="mt-3 grey-text"><strong>Hint:</strong> ${hint}</p>`;
     } else {
-      return '';
+      return "";
     }
   }
 
   static formatNumber(n) {
     var parts = n.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return `<strong class="p-1 blue-grey-text number copy-target" style="font-size:1.1rem;" title="${n}">${parts.join(".")}</strong>`;
+    return `<strong class="p-1 blue-grey-text number copy-target" style="font-size:1.1rem;" title="${n}">${parts.join(
+      "."
+    )}</strong>`;
   }
 
   static formatAccount(a) {
-    return `<strong class="green accent-1 p-1 blue-grey-text number copy-target" title="${a}">${DappLib.toCondensed(a, 6, 4)}</strong>${DappLib.addClippy(a)}`;
+    return `<strong class="green accent-1 p-1 blue-grey-text number copy-target" title="${a}">${DappLib.toCondensed(
+      a,
+      6,
+      4
+    )}</strong>${DappLib.addClippy(a)}`;
   }
 
   static formatTxHash(a) {
     let value = DappLib.getTransactionHash(a);
-    return `<strong class="teal lighten-5 p-1 blue-grey-text number copy-target" title="${value}">${DappLib.toCondensed(value, 6, 4)}</strong>${DappLib.addClippy(value)}`;
+    return `<strong class="teal lighten-5 p-1 blue-grey-text number copy-target" title="${value}">${DappLib.toCondensed(
+      value,
+      6,
+      4
+    )}</strong>${DappLib.addClippy(value)}`;
   }
 
   static formatBoolean(a) {
-    return (a ? 'YES' : 'NO');
+    return a ? "YES" : "NO";
   }
 
   static formatText(a, copyText) {
-    if (!a) { return; }
-    if (a.startsWith('<')) {
+    if (!a) {
+      return;
+    }
+    if (a.startsWith("<")) {
       return a;
     }
-    return `<span class="copy-target" title="${copyText ? copyText : a}">${a}</span>${DappLib.addClippy(copyText ? copyText : a)}`;
+    return `<span class="copy-target" title="${
+      copyText ? copyText : a
+    }">${a}</span>${DappLib.addClippy(copyText ? copyText : a)}`;
   }
 
   static formatStrong(a) {
@@ -1295,15 +1299,15 @@ module.exports = class DappLib {
 
   static formatObject(a) {
     let data = [];
-    let labels = ['Item', 'Value'];
-    let keys = ['item', 'value'];
-    let formatters = ['Strong', 'Text-20-5']; // 'Strong': Bold, 'Text-20-5': Compress a 20 character long string down to 5
-    let reg = new RegExp('^\\d+$'); // only digits
+    let labels = ["Item", "Value"];
+    let keys = ["item", "value"];
+    let formatters = ["Strong", "Text-20-5"]; // 'Strong': Bold, 'Text-20-5': Compress a 20 character long string down to 5
+    let reg = new RegExp("^\\d+$"); // only digits
     for (let key in a) {
       if (!reg.test(key)) {
         data.push({
           item: key.substr(0, 1).toUpperCase() + key.substr(1),
-          value: a[key]
+          value: a[key],
         });
       }
     }
@@ -1311,51 +1315,59 @@ module.exports = class DappLib {
   }
 
   static formatArray(h, dataFormatters, dataLabels, dataKeys) {
-
     let output = '<table class="table table-striped">';
 
     if (dataLabels) {
-      output += '<thead><tr>';
+      output += "<thead><tr>";
       for (let d = 0; d < dataLabels.length; d++) {
         output += `<th scope="col">${dataLabels[d]}</th>`;
       }
-      output += '</tr></thead>';
+      output += "</tr></thead>";
     }
-    output += '<tbody>';
+    output += "<tbody>";
     h.map((item) => {
-      output += '<tr>';
+      output += "<tr>";
       for (let d = 0; d < dataFormatters.length; d++) {
         let text = String(dataKeys && dataKeys[d] ? item[dataKeys[d]] : item);
         let copyText = dataKeys && dataKeys[d] ? item[dataKeys[d]] : item;
-        if (text.startsWith('<')) {
-          output += (d == 0 ? '<th scope="row">' : '<td>') + text + (d == 0 ? '</th>' : '</td>');
+        if (text.startsWith("<")) {
+          output +=
+            (d == 0 ? '<th scope="row">' : "<td>") +
+            text +
+            (d == 0 ? "</th>" : "</td>");
         } else {
-          let formatter = 'format' + dataFormatters[d];
-          if (formatter.startsWith('formatText')) {
-            let formatterFrags = formatter.split('-');
+          let formatter = "format" + dataFormatters[d];
+          if (formatter.startsWith("formatText")) {
+            let formatterFrags = formatter.split("-");
             if (formatterFrags.length === 3) {
-              text = DappLib.toCondensed(text, Number(formatterFrags[1]), Number(formatterFrags[2]));
+              text = DappLib.toCondensed(
+                text,
+                Number(formatterFrags[1]),
+                Number(formatterFrags[2])
+              );
             } else if (formatterFrags.length === 2) {
               text = DappLib.toCondensed(text, Number(formatterFrags[1]));
             }
             formatter = formatterFrags[0];
           }
-          output += (d == 0 ? '<th scope="row">' : '<td>') + DappLib[formatter](text, copyText) + (d == 0 ? '</th>' : '</td>');
+          output +=
+            (d == 0 ? '<th scope="row">' : "<td>") +
+            DappLib[formatter](text, copyText) +
+            (d == 0 ? "</th>" : "</td>");
         }
       }
-      output += '</tr>';
-    })
-    output += '</tbody></table>';
+      output += "</tr>";
+    });
+    output += "</tbody></table>";
     return output;
   }
 
   static getFormattedResultNode(retVal, key) {
-
-    let returnKey = 'result';
-    if (key && (key !== null) && (key !== 'null') && (typeof (key) === 'string')) {
+    let returnKey = "result";
+    if (key && key !== null && key !== "null" && typeof key === "string") {
       returnKey = key;
     }
-    let formatted = '';
+    let formatted = "";
     switch (retVal.type) {
       case DappLib.DAPP_RESULT_BIG_NUMBER:
         formatted = DappLib.formatNumber(retVal[returnKey].toString(10));
@@ -1372,31 +1384,29 @@ module.exports = class DappLib {
       case DappLib.DAPP_RESULT_IPFS_HASH_ARRAY:
         formatted = DappLib.formatArray(
           retVal[returnKey],
-          ['TxHash', 'IpfsHash', 'Text-10-5'], //Formatter
-          ['Transaction', 'IPFS URL', 'Doc Id'], //Label
-          ['transactionHash', 'ipfsHash', 'docId'] //Values
+          ["TxHash", "IpfsHash", "Text-10-5"], //Formatter
+          ["Transaction", "IPFS URL", "Doc Id"], //Label
+          ["transactionHash", "ipfsHash", "docId"] //Values
         );
         break;
       case DappLib.DAPP_RESULT_SIA_HASH_ARRAY:
         formatted = DappLib.formatArray(
           retVal[returnKey],
-          ['TxHash', 'SiaHash', 'Text-10-5'], //Formatter
-          ['Transaction', 'Sia URL', 'Doc Id'], //Label
-          ['transactionHash', 'docId', 'docId'] //Values
+          ["TxHash", "SiaHash", "Text-10-5"], //Formatter
+          ["Transaction", "Sia URL", "Doc Id"], //Label
+          ["transactionHash", "docId", "docId"] //Values
         );
         break;
       case DappLib.DAPP_RESULT_ARRAY:
         formatted = DappLib.formatArray(
           retVal[returnKey],
-          retVal.formatter ? retVal.formatter : ['Text'],
+          retVal.formatter ? retVal.formatter : ["Text"],
           null,
           null
         );
         break;
       case DappLib.DAPP_RESULT_STRING:
-        formatted = DappLib.formatPlain(
-          retVal[returnKey]
-        );
+        formatted = DappLib.formatPlain(retVal[returnKey]);
         break;
       case DappLib.DAPP_RESULT_OBJECT:
         formatted = DappLib.formatObject(retVal[returnKey]);
@@ -1406,22 +1416,29 @@ module.exports = class DappLib {
         break;
     }
 
-    let resultNode = document.createElement('div');
-    resultNode.className = `note text-xs ${retVal.type === DappLib.DAPP_RESULT_ERROR ? 'bg-red-400' : 'bg-green-400'} m-3 p-3`;
-    let closeMarkup = '<div class="float-right" onclick="this.parentNode.parentNode.removeChild(this.parentNode)" title="Dismiss" class="text-right mb-1 mr-2" style="cursor:pointer;">X</div>';
-    resultNode.innerHTML = `<span class='text-xl break-words'>${closeMarkup} ${retVal.type === DappLib.DAPP_RESULT_ERROR ? '☹️' : '👍️'} ${(Array.isArray(retVal[returnKey]) ? 'Result' : retVal.label)} : ${formatted} ${DappLib.formatHint(retVal.hint)}</span>`
+    let resultNode = document.createElement("div");
+    resultNode.className = `note text-xs ${
+      retVal.type === DappLib.DAPP_RESULT_ERROR ? "bg-red-400" : "bg-green-400"
+    } m-3 p-3`;
+    let closeMarkup =
+      '<div class="float-right" onclick="this.parentNode.parentNode.removeChild(this.parentNode)" title="Dismiss" class="text-right mb-1 mr-2" style="cursor:pointer;">X</div>';
+    resultNode.innerHTML = `<span class='text-xl break-words'>${closeMarkup} ${
+      retVal.type === DappLib.DAPP_RESULT_ERROR ? "☹️" : "👍️"
+    } ${
+      Array.isArray(retVal[returnKey]) ? "Result" : retVal.label
+    } : ${formatted} ${DappLib.formatHint(retVal.hint)}</span>`;
     // Wire-up clipboard copy
-    new ClipboardJS('.copy-target', {
+    new ClipboardJS(".copy-target", {
       text: function (trigger) {
-        return trigger.getAttribute('data-copy');
-      }
+        return trigger.getAttribute("data-copy");
+      },
     });
 
     return resultNode;
   }
 
   static getObjectNamedProperties(a) {
-    let reg = new RegExp('^\\d+$'); // only digits
+    let reg = new RegExp("^\\d+$"); // only digits
     let newObj = {};
     for (let key in a) {
       if (!reg.test(key)) {
@@ -1453,12 +1470,11 @@ module.exports = class DappLib {
   }
 
   static fromAscii(str, padding) {
-
     if (Array.isArray(str)) {
       return DappLib.arrayToHex(str);
     }
 
-    if (str.startsWith('0x') || !padding) {
+    if (str.startsWith("0x") || !padding) {
       return str;
     }
 
@@ -1466,21 +1482,20 @@ module.exports = class DappLib {
       str = str.substr(0, padding);
     }
 
-    var hex = '0x';
+    var hex = "0x";
     for (var i = 0; i < str.length; i++) {
       var code = str.charCodeAt(i);
       var n = code.toString(16);
-      hex += n.length < 2 ? '0' + n : n;
+      hex += n.length < 2 ? "0" + n : n;
     }
-    return hex + '0'.repeat(padding * 2 - hex.length + 2);
-  };
-
+    return hex + "0".repeat(padding * 2 - hex.length + 2);
+  }
 
   static toAscii(hex) {
-    var str = '',
+    var str = "",
       i = 0,
       l = hex.length;
-    if (hex.substring(0, 2) === '0x') {
+    if (hex.substring(0, 2) === "0x") {
       i = 2;
     }
     for (; i < l; i += 2) {
@@ -1489,21 +1504,25 @@ module.exports = class DappLib {
       str += String.fromCharCode(code);
     }
     return str;
-  };
+  }
 
   static arrayToHex(bytes) {
     if (Array.isArray(bytes)) {
-      return '0x' +
-        Array.prototype.map.call(bytes, function (byte) {
-          return ('0' + (byte & 0xFF).toString(16)).slice(-2);
-        }).join('')
+      return (
+        "0x" +
+        Array.prototype.map
+          .call(bytes, function (byte) {
+            return ("0" + (byte & 0xff).toString(16)).slice(-2);
+          })
+          .join("")
+      );
     } else {
       return bytes;
     }
   }
 
   static hexToArray(hex) {
-    if ((typeof hex === 'string') && (hex.beginsWith('0x'))) {
+    if (typeof hex === "string" && hex.beginsWith("0x")) {
       let bytes = [];
       for (let i = 0; i < hex.length; i += 2) {
         bytes.push(parseInt(hex.substr(i, 2), 16));
@@ -1515,7 +1534,9 @@ module.exports = class DappLib {
   }
 
   static toCondensed(s, begin, end) {
-    if (!s) { return; }
+    if (!s) {
+      return;
+    }
     if (s.length && s.length <= begin + end) {
       return s;
     } else {
@@ -1533,8 +1554,9 @@ module.exports = class DappLib {
 
   // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
   static getUniqueId() {
-    return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[x]/g, function (c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".replace(/[x]/g, function (c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   }
@@ -1549,30 +1571,20 @@ module.exports = class DappLib {
   // before each test run. Look for the following line in test scripts to see it done:
   //  DappLib.getConfig = Function(`return ${ JSON.stringify(DappLib.getTestConfig(testDappStateContract, testDappContract, testAccounts))}`);
   static getTestConfig(testDappStateContract, testDappContract, testAccounts) {
-
-    return Object.assign(
-      {},
-      dappConfig,
-      {
-        dappStateContractAddress: testDappStateContract.address,
-        dappContractAddress: testDappContract.address,
-        accounts: testAccounts,
-        owner: testAccounts[0],
-        admins: [
-          testAccounts[1],
-          testAccounts[2],
-          testAccounts[3]
-        ],
-        users: [
-          testAccounts[4],
-          testAccounts[5],
-          testAccounts[6],
-          testAccounts[7],
-          testAccounts[8]
-        ]
-        ///+test
-      }
-    );
+    return Object.assign({}, dappConfig, {
+      dappStateContractAddress: testDappStateContract.address,
+      dappContractAddress: testDappContract.address,
+      accounts: testAccounts,
+      owner: testAccounts[0],
+      admins: [testAccounts[1], testAccounts[2], testAccounts[3]],
+      users: [
+        testAccounts[4],
+        testAccounts[5],
+        testAccounts[6],
+        testAccounts[7],
+        testAccounts[8],
+      ],
+      ///+test
+    });
   }
-
-}
+};

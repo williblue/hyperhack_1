@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import TribesPage from './Tribes';
+
 
 function App() {
   return (
     <div>
-      <TribesPage />
+      ✨ Dappiness ✨
     </div>
   );
 }
