@@ -139,6 +139,27 @@ p {
   margin-top: 1.5rem;
 }
 
+.tribe-name {
+  cursor: pointer;
+  margin-bottom: 4.2rem;
+  width: 200px;
+  height: 290px;
+  border: 2px solid var(--color-theme-white);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(1px 5px 3px indigo);
+}
+
+.tribe-name:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s;
+}
+
+.tribe-name > h2 {
+  font-size: 1rem;
+}
 .cards {
   cursor: pointer;
   width: 300px;
@@ -165,7 +186,6 @@ p {
 }
 
 .container-3 {
-  margin: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -175,15 +195,30 @@ p {
 }
 
 .tribe {
-  width: 32rem;
+  width: 30rem;
   height: auto;
   margin-top: 2.5rem;
-  margin-right: 2rem;
+  margin-left: -10rem;
 }
 
+.tribe-card {
+  margin: 0 4rem 0 -8rem;
+  width: 350px;
+  height: 440px;
+  border: 2px solid var(--color-theme-white);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(1px 5px 3px indigo);
+}
+
+.text {
+  font-size: 1.5rem;
+}
 .description {
   color: var(--color-theme-white);
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 /* --------------- End of My Tribe Page ---------------- */

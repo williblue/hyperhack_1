@@ -14,14 +14,7 @@ const TribesPage = () => {
         ipfsHash: string
         name: string
     } | null>()
-    const data = {
-        tenantOwner: ACCOUNT.Admin,
-        account: ACCOUNT.Birbal,
-    }
-    const getCurrentTribe = async () => {
-        const tribe = await DappLib.TribesGetCurrentTribe(data)
-        setCurrentTribe(tribe.result)
-    }
+
 
     const leaveTribe = async () => {
         const data = {
@@ -33,8 +26,18 @@ const TribesPage = () => {
     }
 
     useEffect(() => {
+        const getCurrentTribe = async () => {
+            const data = {
+                tenantOwner: ACCOUNT.Admin,
+                account: ACCOUNT.Birbal,
+            }
+
+            const tribe = await DappLib.TribesGetCurrentTribe(data)
+            setCurrentTribe(tribe.result)
+        }
         getCurrentTribe()
     }, [])
+
 
     return (
         <main>
@@ -42,12 +45,13 @@ const TribesPage = () => {
             {currentTribe && (
                 <div className="container-2">
                     <div className="container-3">
-                        <img
+                        {currentTribe.ipfsHash === 'N/A' ? <div className="tribe-card"><h2 >{currentTribe.name}</h2></div> : <img
                             src={currentTribe.ipfsHash}
                             alt={currentTribe.name}
                             className="tribe"
-                        />
-                        <div>
+                        />}
+
+                        <div className="text">
                             <h1>{currentTribe.name}</h1>
                             <p className="description">{currentTribe.description}</p>
                         </div>

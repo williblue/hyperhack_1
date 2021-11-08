@@ -57,7 +57,7 @@ const AllTribes = () => {
               {Object.entries(allTribes).map(([k, v]) => (
                 <div key={k} onClick={() => joinTribe(k)}>
                   {/* @ts-ignore */}
-                  <img className="cards" src={v.ipfsHash} alt={k} />
+                  {v.ipfsHash === 'N/A' ? <div className="tribe-name"><h2 >{k}</h2></div> : <img className="cards" src={v.ipfsHash} alt={k} />}
                 </div>
               ))}
             </div>

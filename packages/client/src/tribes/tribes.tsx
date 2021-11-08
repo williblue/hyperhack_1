@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SyntheticEvent } from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 //@ts-ignore
 import DappLib from "@decentology/dappstarter-dapplib"
@@ -13,24 +13,25 @@ const TribesPage = (props: any) => {
   const [error, setError] = useState(false)
   const navigate = useNavigate()
 
-  const getCurrentTribe = async () => {
-    const data = {
-      tenantOwner: ACCOUNT.Admin,
-      account: ACCOUNT.Birbal,
-    }
-    try {
-      const stuff = await DappLib.TribesGetCurrentTribe(data)
-      setError(false)
-      setCurrentTribe(stuff.result)
-    } catch (error) {
-      // This will only happen if you haven't run "instance"
-      // for an account under the Tenant module,
-      // and your `tenantOwner` isn't that same account.
-      setError(true)
-    }
-  }
 
   useEffect(() => {
+    const getCurrentTribe = async () => {
+      const data = {
+        tenantOwner: ACCOUNT.Admin,
+        account: ACCOUNT.Birbal,
+      }
+      try {
+        const stuff = await DappLib.TribesGetCurrentTribe(data)
+        setError(false)
+        setCurrentTribe(stuff.result)
+      } catch (error) {
+        // This will only happen if you haven't run "instance"
+        // for an account under the Tenant module,
+        // and your `tenantOwner` isn't that same account.
+        setError(true)
+      }
+    }
+
     getCurrentTribe()
   }, [])
 
