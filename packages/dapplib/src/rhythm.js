@@ -134,8 +134,7 @@ const dappConfigFile = path.join(__dirname, 'dapp-config.json');
     }
 
     // Start the emulator
-    const emulatorInstance = spawn('npx', [
-      'flow',
+    const emulatorInstance = spawn('flow', [
       'emulator',
       'start',
       '--config-path=./flow.json',
@@ -149,6 +148,7 @@ const dappConfigFile = path.join(__dirname, 'dapp-config.json');
       '--service-hash-algo=SHA3_256',
       mode == MODE.TEST ? '' : '-v'
     ]);
+    console.log(emulatorInstance.spawnargs);
 
     if (mode != MODE.TEST) {
       emulatorInstance.stdout.on('data', (data) => {
