@@ -62,13 +62,17 @@ const TribesPage = (props: any) => {
               <ul>
                 <li>
                   1) You have not called `instance` for an account in the Tribes
-                  module.
+                  module. <a href="http://localhost:5000/playground/harness/core-tribes" target="_blank" rel="noreferrer">Enter playground to fix this.</a>
                 </li>
                 <li>
                   2) The `tenantOwner` field in `getCurrentTribe` function is
                   not the account you used in the first step.
                 </li>
               </ul>
+              <p>
+                Need Help?
+                <a href="https://docs-hyperhack.decentology.com/learn-with-examples" target="_blank" rel="noreferrer"> Watch the tutorial.</a>
+              </p>
             </div>
           )}
         </div>
