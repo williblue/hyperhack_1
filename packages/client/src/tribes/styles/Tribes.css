@@ -4,7 +4,7 @@
 :root {
   --color-theme-black: #0e0d0d;
   --color-theme-white: #f0f0f0;
-  --color-theme-red: #ef3d3d;
+  --color-theme-red: #ffa3a3;
 }
 
 * {
@@ -25,7 +25,7 @@ main {
   margin: auto;
   max-width: 1900px;
   height: 100vh;
-  padding: 2rem 0;
+  padding: 2rem 2rem;
 }
 
 /* ------------------- Navbar ------------------- */
@@ -38,8 +38,12 @@ nav {
 }
 
 nav > a {
-  cursor: pointer;
   font-size: 0.9rem;
+}
+
+a {
+  text-decoration: underline;
+  cursor: pointer;
   color: var(--color-theme-white);
 }
 
@@ -90,8 +94,8 @@ nav > a {
 .error {
   margin-top: 1.5rem;
   color: var(--color-theme-red);
-  font-size: 0.8rem;
-  font-family: "Times New Roman", Times, serif;
+  font-size: 0.9rem;
+  font-family: "Inconsolata", monospace;
   text-transform: none;
   letter-spacing: 2px;
 }
@@ -99,13 +103,13 @@ nav > a {
 .error > p {
   text-align: center;
   margin-bottom: 0.3rem;
+  font-size: 0.9rem;
 }
 
 p {
   margin-top: 1.5rem;
   color: var(--color-theme-red);
-  font-size: 0.8rem;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Inconsolata", monospace;
   text-transform: none;
   letter-spacing: 2px;
 }
@@ -144,9 +148,21 @@ p {
   margin-top: 1.5rem;
 }
 
+.cards {
+  cursor: pointer;
+  width: 200px;
+  height: 290px;
+  overflow: hidden;
+}
+
+.cards:hover {
+  transform: scale(1.03);
+  transition: transform 0.2s;
+  overflow: hidden;
+}
+
 .tribe-name {
   cursor: pointer;
-  margin-bottom: 4.2rem;
   width: 200px;
   height: 290px;
   border: 2px solid var(--color-theme-white);
@@ -155,6 +171,7 @@ p {
   align-items: center;
   justify-content: center;
   filter: drop-shadow(1px 5px 3px indigo);
+  margin-right: 2rem;
 }
 
 .tribe-name:hover {
@@ -165,24 +182,12 @@ p {
 .tribe-name > h2 {
   font-size: 1rem;
 }
-.cards {
-  cursor: pointer;
-  width: 300px;
-  height: 400px;
-  overflow: hidden;
-}
-
-.cards:hover {
-  transform: scale(1.03);
-  transition: transform 0.2s;
-  overflow: hidden;
-}
 /* --------------- End of All Tribes Page ---------------- */
 
 /* ------------------- My Tribe Page ------------------- */
 .container-2 {
   height: 90%;
-  width: 70%;
+  width: 80%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -200,16 +205,16 @@ p {
 }
 
 .tribe {
-  width: 30rem;
+  width: 15rem;
   height: auto;
   margin-top: 2.5rem;
-  margin-left: -10rem;
+  margin-right: 4rem;
 }
 
 .tribe-card {
-  margin: 0 4rem 0 -8rem;
-  width: 350px;
-  height: 440px;
+  margin: 2.5rem 4rem 0 0;
+  width: 200px;
+  height: 300px;
   border: 2px solid var(--color-theme-white);
   border-radius: 2rem;
   display: flex;
