@@ -46,14 +46,14 @@ const TribesPage = (props: any) => {
             <button
               className="join"
               onClick={() => {
-                error ? setShowError(true) : navigate("/all-tribes")
+                error ? setShowError(true) : navigate("all-tribes")
               }}
             >
               {!error ? 'Join A Tribe' : 'Get Started'}
 
             </button>
           ) : (
-            <button className="join" onClick={() => navigate("/my-tribe")}>
+            <button className="join" onClick={() => navigate("my-tribe")}>
               View Your Tribe
             </button>
           )}
