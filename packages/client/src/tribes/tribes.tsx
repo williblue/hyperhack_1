@@ -49,7 +49,8 @@ const TribesPage = (props: any) => {
                 error ? setShowError(true) : navigate("/all-tribes")
               }}
             >
-              Join A Tribe
+              {!error ? 'Join A Tribe' : 'Get Started'}
+
             </button>
           ) : (
             <button className="join" onClick={() => navigate("/my-tribe")}>
@@ -58,15 +59,15 @@ const TribesPage = (props: any) => {
           )}
           {showError && (
             <div className="error">
-              <p>Two things could be wrong:</p>
+              <p>To Get Tribes running:</p>
               <ul>
                 <li>
-                  1) You have not called `instance` for an account in the Tribes
-                  module. <a href="http://localhost:5000/playground/harness/core-tribes" target="_blank" rel="noreferrer">Enter playground to fix this.</a>
+                  1) You need to have an`instance` for an account in the Tribes
+                  module. <a href="http://localhost:5000/playground/harness/core-tribes" target="_blank" rel="noreferrer">Enter playground to do this.</a>
                 </li>
                 <li>
-                  2) The `tenantOwner` field in `getCurrentTribe` function is
-                  not the account you used in the first step.
+                  2) Make sure that the `tenantOwner` field in `getCurrentTribe` function is
+                  the account you used in the first step.
                 </li>
               </ul>
               <p>

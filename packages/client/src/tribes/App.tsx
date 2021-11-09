@@ -7,13 +7,13 @@ import MyTribe from "./my-tribe"
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<TribesPage />} />
-        <Route path="/all-tribes" element={<AllTribes />} />
-        <Route path="/my-tribe" element={<MyTribe />} />
-      </Routes>
-    </div>
+
+    <Routes>
+      <Route path="/" element={<TribesPage />} />
+      <Route path="/all-tribes" element={<AllTribes />} />
+      <Route path="/my-tribe" element={<MyTribe />} />
+    </Routes>
+
   )
 }
 
