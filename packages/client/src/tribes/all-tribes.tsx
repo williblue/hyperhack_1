@@ -31,7 +31,7 @@ const AllTribes = () => {
       }
 
       const result = await DappLib.TribesJoinTribe(data)
-      if (result) navigate("/my-tribe")
+      if (result) navigate("../my-tribe")
     } catch (error) { }
   }
 

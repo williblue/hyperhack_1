@@ -22,7 +22,7 @@ const TribesPage = () => {
             signer: ACCOUNT.Birbal,
         }
         const result = await DappLib.TribesLeaveTribe(data)
-        if (result) navigate("/")
+        if (result) navigate("..")
     }
 
     useEffect(() => {
