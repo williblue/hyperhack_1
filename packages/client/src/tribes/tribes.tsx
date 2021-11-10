@@ -59,17 +59,9 @@ const TribesPage = (props: any) => {
           )}
           {showError && (
             <div className="error">
-              <p>To Get Tribes running:</p>
-              <ul>
-                <li>
-                  1) You need to have an`instance` for an account in the Tribes
-                  module. <a href="http://localhost:5000/playground/harness/core-tribes" target="_blank" rel="noreferrer">Enter playground to do this.</a>
-                </li>
-                <li>
-                  2) Make sure that the `tenantOwner` field in `getCurrentTribe` function is
-                  the account you used in the first step.
-                </li>
-              </ul>
+              <p>To Get Tribes running, you need to have an`instance` for the Admin account in the Tribes
+                module. <a href="http://localhost:5000/playground/harness/core-tribes" target="_blank" rel="noreferrer">Enter playground to do this.</a>
+              </p>
               <p>
                 Need Help?
                 <a href="https://docs-hyperhack.decentology.com/learn-with-examples" target="_blank" rel="noreferrer"> Watch the tutorial.</a>
